@@ -18,13 +18,14 @@ import os.path
 import glob
 import re
 
-random.seed(0)
+random.seed(2)
 
 from render import render
 
 OVERALLPARAMS = "-algorithm.distancefunction EuclideanDistanceFunction"
 #OVERALLPARAMS = "-algorithm.distancefunction correlation.PearsonCorrelationDistanceFunction"
 NCLUSTERS = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40]
+#NCLUSTERS = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28]
 #NCLUSTERS = [1, 2, 3, 4, 5]
 HYPERPARAMS = OrderedDict({
     "clustering.DBSCAN":
@@ -36,34 +37,42 @@ HYPERPARAMS = OrderedDict({
         OrderedDict({
             "deliclu.minpts": [5, 50],
         }),
-    "clustering.EM":
-        OrderedDict({
-            "em.k": NCLUSTERS,
-        }),
-    "clustering.NaiveMeanShiftClustering":
-        OrderedDict({
-            "meanshift.kernel-bandwidth": [0.1, 0.25, 0.5, 0.75, 0.9],
-        }),
-    "clustering.OPTICS":
-        OrderedDict({
-            "optics.epsilon": [0.1, 0.25, 0.5, 0.75, 0.9],
-            "optics.minpts": [5, 50],
-        }),
+#   # Doesn't work for me, I keep getting NaN
+#    "clustering.EM":
+#        OrderedDict({
+#            "em.k": NCLUSTERS,
+#        }),
+#   # Slow
+#    "clustering.NaiveMeanShiftClustering":
+#        OrderedDict({
+#            "meanshift.kernel-bandwidth": [0.1, 0.25, 0.5, 0.75, 0.9],
+#        }),
+#   # Not meant to be run by itself
+#    "clustering.OPTICS":
+#        OrderedDict({
+#            "optics.epsilon": [0.1, 0.25, 0.5, 0.75, 0.9],
+#            "optics.minpts": [5, 50],
+#        }),
+#   # I don't want to code an inner loop for producing hyperparameters for each algorithm.
 #    "clustering.OPTICSXi":
 #        OrderedDict({
 #            "opticsxi.xi": [0.1, 0.25, 0.5, 0.75, 0.9],
 #            "opticsxi.algorithm": ["OPTICS", "DeLiClu", "correlation.HiCO", "subspace.HiSC"],
 #        }),
+#   # Different cluster file format
 #    "clustering.SLINK":
 #        OrderedDict({
 #        }),
-    "clustering.SNNClustering":
-        OrderedDict({
-            "snn.epsilon": [0.1, 0.25, 0.5, 0.75, 0.9],
-            "snn.minpts": [5, 50],
-        }),
+#   # This doesn't work for me
+#    "clustering.SNNClustering":
+#        OrderedDict({
+#            "snn.epsilon": [0.1, 0.25, 0.5, 0.75, 0.9],
+#            "snn.minpts": [5, 50],
+#        }),
     "clustering.gdbscan.GeneralizedDBSCAN":
         OrderedDict({
+            "dbscan.epsilon": [0.1, 0.25, 0.5, 0.75, 0.9],
+            "dbscan.minpts": [5, 50],
         }),
     "clustering.kmeans.KMeansLloyd":
         OrderedDict({
@@ -75,21 +84,23 @@ HYPERPARAMS = OrderedDict({
             "kmeans.k": NCLUSTERS,
             "kmeans.initialization": ["KMeansPlusPlusInitialMeans"],
         }),
+#    # This can be VERY slow
 #    "clustering.kmeans.KMediansLloyd":
 #        OrderedDict({
 #            "kmeans.k": NCLUSTERS,
 #            "kmeans.initialization": ["KMeansPlusPlusInitialMeans"],
 #        }),
-    "clustering.kmeans.KMedoidsEM":
-        OrderedDict({
-            "kmeans.k": NCLUSTERS,
-            "kmeans.initialization": ["KMeansPlusPlusInitialMeans"],
-        }),
-    "clustering.kmeans.KMedoidsPAM":
-        OrderedDict({
-            "kmeans.k": NCLUSTERS,
-            "kmeans.initialization": ["KMeansPlusPlusInitialMeans"],
-        }),
+#    "clustering.kmeans.KMedoidsEM":
+#        OrderedDict({
+#            "kmeans.k": NCLUSTERS,
+#            "kmeans.initialization": ["KMeansPlusPlusInitialMeans"],
+#        }),
+#    # This can be slow
+#    "clustering.kmeans.KMedoidsPAM":
+#        OrderedDict({
+#            "kmeans.k": NCLUSTERS,
+#            "kmeans.initialization": ["KMeansPlusPlusInitialMeans"],
+#        }),
 })
 
 def tsne(args):
