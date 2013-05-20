@@ -75,11 +75,11 @@ HYPERPARAMS = OrderedDict({
             "kmeans.k": NCLUSTERS,
             "kmeans.initialization": ["KMeansPlusPlusInitialMeans"],
         }),
-    "clustering.kmeans.KMediansLloyd":
-        OrderedDict({
-            "kmeans.k": NCLUSTERS,
-            "kmeans.initialization": ["KMeansPlusPlusInitialMeans"],
-        }),
+#    "clustering.kmeans.KMediansLloyd":
+#        OrderedDict({
+#            "kmeans.k": NCLUSTERS,
+#            "kmeans.initialization": ["KMeansPlusPlusInitialMeans"],
+#        }),
     "clustering.kmeans.KMedoidsEM":
         OrderedDict({
             "kmeans.k": NCLUSTERS,
