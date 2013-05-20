@@ -24,8 +24,8 @@ from render import render
 
 OVERALLPARAMS = "-algorithm.distancefunction EuclideanDistanceFunction"
 #OVERALLPARAMS = "-algorithm.distancefunction correlation.PearsonCorrelationDistanceFunction"
-#NCLUSTERS = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40]
-NCLUSTERS = [1, 2, 3, 4, 5]
+NCLUSTERS = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40]
+#NCLUSTERS = [1, 2, 3, 4, 5]
 HYPERPARAMS = OrderedDict({
     "clustering.DBSCAN":
         OrderedDict({

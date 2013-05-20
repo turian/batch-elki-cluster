@@ -14,6 +14,7 @@ Requirements
     git clone git://github.com/ninjin/barnes-hut-sne.git
 
 * ELKI (download the JAR)
+    http://elki.dbs.ifi.lmu.de/wiki/Releases
 
 * ImageMagick
 
